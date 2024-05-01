@@ -36,7 +36,7 @@
 
 //ii. ES6 Classes
     //   👉 Modern alternative to constructor function syntax.
-    //   👉 'Syntactic sugar': behind the scens, ES6 classes work exactly like constructor functions.
+    //   👉 'Syntactic sugar': behind the scene, ES6 classes work exactly like constructor functions.
     //   👉 ES6 classes do not behave like classes in 'classical OOP'.
 
 
@@ -216,7 +216,7 @@ class PersonCl {
 
     // will be set as property on .prototype
 
-    //Getter and Setter looks like property, but it's actually function! 
+    //Getter and Setter looks like property, but it's actually function!
     get age() {
         console.log(new Date().getFullYear() - this.birthYear);
     }
