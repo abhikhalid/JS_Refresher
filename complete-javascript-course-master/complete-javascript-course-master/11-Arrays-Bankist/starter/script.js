@@ -1,7 +1,5 @@
 'use strict';
 
-
-
 /////////////////////////////////////////////////
 
 /*
@@ -15,7 +13,7 @@ console.log(arr.slice(2)); //starting at position no 2
 console.log(arr.slice(2, 4)); //starting 2, ending at 3
 console.log(arr.slice(-2)); // last 2 elements at the array
 console.log(arr.slice(-1)); // last element
-console.log(arr.slice(1, -2)) // second element + skips last 2 element 
+console.log(arr.slice(1, -2)) // second element + skips last 2 element
 console.log(arr.slice());
 console.log([...arr]);
 
@@ -89,7 +87,7 @@ movements.forEach(function (movement, i, array) {
 
 // ForEach with Map and Set
 
-//Map 
+//Map
 /*
 
 const currencies = new Map([
@@ -477,7 +475,7 @@ console.log(maximum);
 ///////////////////////////////////////
 // Coding Challenge #2
 
-/* 
+/*
 Let's go back to Julia and Kate's study about dogs. This time, they want to convert dog ages to human ages and calculate the average age of the dogs in their study.
 
 Create a function 'calcAverageHumanAge', which accepts an arrays of dog's ages ('ages'), and does the following things in order:
@@ -537,7 +535,7 @@ console.log(totalDepositsUSD);
 ///////////////////////////////////////
 // Coding Challenge #3
 
-/* 
+/*
 Rewrite the 'calcAverageHumanAge' function from the previous challenge, but this time as an arrow function, and using chaining!
 
 TEST DATA 1: [5, 2, 4, 1, 15, 8, 3]
@@ -559,7 +557,7 @@ const calcAverageHumanAge = (dogAges) => {
       return accumulator + age / arr.length
     }
       , 0);
-  
+
   return avgDogAge;
 }
 
@@ -728,7 +726,7 @@ const bankDepositSum = accounts.flatMap(acc => acc.movements)
 
 console.log(bankDepositSum);
 
-// 2. 
+// 2.
 
 // const numDeposits100 = accounts.flatMap(acc => acc.movements)
 //   .filter(mov => mov >= 1000).length;
