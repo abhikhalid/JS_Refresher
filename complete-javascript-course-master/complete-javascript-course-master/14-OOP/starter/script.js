@@ -1,25 +1,66 @@
 'use strict';
 
-'use strict';
+// Objects are linked to a prototype object. so each object has javascript has prototype.
+// Prototypal inheritance: The prototype contains methods (behaviour) that are accessible to all objects linked to that prototype.
 
-// Constructor Functions and the new operator
+//  Prototype (cantains methods)
+//      ^
+//      |
+//      |
+//    Object (can access methods)
 
+// So, basically objects inherit methods and properties from the prototype which is the reason why this mechanism is called prototypal inheritance.
+
+// Beside prototypal inheritance, we also call this mechanism, delegation.
+
+// In java, C++, one class was inheriting from another class. But in this case, it's basically an instance (object) inheriting from a class.
+
+
+// Array.prototype.map()
+
+// const num = [1,2,3];
+// num.map(n => n *2);
+// Array.prototype is the prototype of all array objects we create in javascript.
+// Threfore, all arrays have access to the map method!
+
+
+// Now the question is, how do we actually create prototypes? And how do we link objects to prototypes? How can we create new objects,
+// without having classes?
+
+// There are 3 ways!
+// i. Constructor functions
+    //   👉 Technique to create objects from a function.
+    //   👉 This is how built-in object like Arrays, Maps or Sets are actually implemented.
+    //   👉 This is also how OOP is done is javascript basically since the beginning.
+
+
+//ii. ES6 Classes
+    //   👉 Modern alternative to constructor function syntax.
+    //   👉 'Syntactic sugar': behind the scens, ES6 classes work exactly like constructor functions.
+    //   👉 ES6 classes do not behave like classes in 'classical OOP'.
+
+
+//iii. Object.create()
+    //   👉 The easiest and most straightforward way of linking an object to a prototype object.
+
+// i.Constructor Functions and the new operator
+// *** Arrow functions will not work as a constructor function as it does not have its own this keyword. ***
 const Person = function (firstName, birthYear) {
     this.firstName = firstName;
     this.birthYear = birthYear;
 
-    //Never do this
+    //Never do this (object will be heavy carrying this method)
     // this.calcAge = function () {
     //     console.log(2037 - this.birthYear);
     // }
 };
 
-const person = new Person('Khalid', 1996);
+const person = new Person('Khalid', 1996); // we just have created an object from constructor function!.
 console.log(person);
 
 // 1. New {} is created
 // 2. function is called, this = {}
-// 3. {} linked to prototype
+// 3. {} linked to prototype  --- (person.__proto__)
 // 4. function automatically return {}
 
 const person2 = new Person('Israr', 1996);
@@ -31,7 +72,12 @@ console.log(person instanceof Person); //true
 
 
 // Prototypes
-// Each function of js has a property called prototype
+// Objects = functions
+// Every object has 'prototype' property. so every function also has a property.
+// Each function of js has a property called prototype (.prototype) which is also an object!
+
+console.log(Person.prototype);
+
 Person.prototype.calcAge = function () {
     console.log(new Date().getFullYear() - this.birthYear);
 }
@@ -42,12 +88,22 @@ person2.calcAge();
 console.log(person.__proto__);
 console.log(person2.__proto__ === Person.prototype);
 
-// Person.prototype is not actually the prototype of person
+// Person.prototype is not actually the prototype of Person
 // but instead, it is used as the prototype of all the objects
+
+// je object hobe ami tar protype hobo!
+
+//  Constructor function [Person()] ➡️➡️ (.prototype) ➡️➡️ Prototype ([Person.prototye])
+//                                 ⬅️⬅️ (.constructor) ⬅️⬅️
+
+// so, Person.prototype.constructor  = Person()
+
+// If an property or method is not found in an object, javascript will look into its prototype
+
 
 console.log(Person.prototype.isPrototypeOf(person));
 
-Person.prototype.species = `Homo Sapiens`;
+Person.prototype.species = `Homo Sapiens`; // we can also set property
 console.log(person.species);
 
 console.log(person.hasOwnProperty('firstName')); //true
@@ -57,17 +113,18 @@ console.log(person.__proto__);
 
 console.log(person.__proto__.__proto__); //object
 
-console.log(person.__proto__.__proto__.__proto__); //null
+console.log(person.__proto__.__proto__.__proto__); //null (Object.__proto is the top of prototype chain)
 
-console.dir(Person.prototype.constructor);
+console.dir(Person.prototype.constructor); //will point back to the Person function itself.
 
-const arr = [3, 6, 4, 5, 6, 9, 3];
+const arr = [3, 6, 4, 5, 6, 9, 3]; // new Array === []
 
 console.log(arr.__proto__);
-console.log(arr.__proto__ === Array.prototype);
+console.log(arr.__proto__ === Array.prototype); //true
 console.log(arr.__proto__.__proto__);
 
 //Not recommended
+// one of the reason, next version of js might add a method with the same name
 Array.prototype.unique = function () {
     return [...new Set(this)];
 };
@@ -130,6 +187,11 @@ car2.brake();
 
 // behind the scene, classes are functions in js, they internally call Constructor Function
 
+// 1. Classes are not hoisted.
+// 2. Class are first-class citizens.
+// 3. Classes are executedin strict mode. if we do not acivate it. all the code in this class will be activated in strict mode
+
+
 // class expression
 // const PersonCl = class {}
 
@@ -153,6 +215,8 @@ class PersonCl {
     }
 
     // will be set as property on .prototype
+
+    //Getter and Setter looks like property, but it's actually function! 
     get age() {
         console.log(new Date().getFullYear() - this.birthYear);
     }
