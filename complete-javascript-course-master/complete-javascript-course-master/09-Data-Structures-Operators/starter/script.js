@@ -1,5 +1,20 @@
 'use strict';
 
+const openingHours = {
+  thu: {
+    open: 12,
+    close: 22,
+  },
+  fri: {
+    open: 11,
+    close: 23,
+  },
+  sat: {
+    open: 0, // Open 24 hours
+    close: 24,
+  },
+};
+
 // Data needed for a later exercise
 const flights =
   '_Delayed_Departure;fao93766109;txl2133758440;11:25+_Arrival;bru0943384722;fao93766109;11:45+_Delayed_Arrival;hel7439299980;fao93766109;12:05+_Departure;fao93766109;lis2323639855;12:30';
@@ -12,22 +27,31 @@ const restaurant = {
   starterMenu: ['Focaccia', 'Bruschetta', 'Garlic Bread', 'Caprese Salad'],
   mainMenu: ['Pizza', 'Pasta', 'Risotto'],
 
-  openingHours: {
-    thu: {
-      open: 12,
-      close: 22,
-    },
-    fri: {
-      open: 11,
-      close: 23,
-    },
-    sat: {
-      open: 0, // Open 24 hours
-      close: 24,
-    },
-  },
+  // openingHours: openingHours,
 
-  order: function(starterIndex, mainIndex){
+  openingHours, // ES6 object literals
+
+  // openingHours: {
+  //   thu: {
+  //     open: 12,
+  //     close: 22,
+  //   },
+  //   fri: {
+  //     open: 11,
+  //     close: 23,
+  //   },
+  //   sat: {
+  //     open: 0, // Open 24 hours
+  //     close: 24,
+  //   },
+  // },
+
+  // order: function(starterIndex, mainIndex){
+  //   return [this.starterMenu[starterIndex], this.mainMenu[mainIndex]];
+  // },
+
+  // ES6 object literals
+  order(starterIndex, mainIndex){
     return [this.starterMenu[starterIndex], this.mainMenu[mainIndex]];
   },
 
@@ -42,6 +66,358 @@ const restaurant = {
     console.log(otherIngredient);
   }
 };
+
+
+const airline = 'TAP Air Portugal';
+const plane = 'A320';
+
+console.log(plane[0]);
+console.log(plane[1]);
+console.log(plane[2]);
+console.log('B737'[0]);
+
+console.log(airline.length);
+console.log('B737'.length);
+
+console.log(airline.indexOf('r'));
+console.log(airline.lastIndexOf('r'));
+console.log(airline.indexOf('Portugal'));
+
+console.log(airline.slice(4));
+console.log(airline.slice(4,7)); // 7-4 = extracted string no. 3
+
+console.log(airline.slice(0, airline.indexOf(' '))); // 4-0 = 4
+console.log(airline.slice(0, airline.lastIndexOf(' '))); // 8-0 = 4
+console.log(airline.slice(0, airline.lastIndexOf(' ') +1)); // 8-0 = 4
+
+console.log(airline.slice(-2));
+console.log(airline.slice(1,-1));
+
+
+const checkMiddleSeat = (seat) =>{
+  // B and E are middle seats
+  const s = seat.slice(-1);
+
+  return (s === 'B' || s === 'E');
+}
+
+console.log(checkMiddleSeat('11B'));
+console.log(checkMiddleSeat('23C'));
+console.log(checkMiddleSeat('3E'));
+
+
+const question = new Map([
+  ['question','What is the best programming language in the world?'],
+  [1,'C'],
+  [2,'Java'],
+  [3,'JavaScript'],
+  ['correct',3],
+  [true,'Correct 😸'],
+  [false,'Try again!'],
+]);
+
+console.log(question);
+
+// Quiz app
+console.log(question.get('question'));
+
+for(const [key,value] of question){
+  if(typeof key === 'number'){
+    console.log(`Answer ${key}: ${value}`);
+  }
+}
+
+const answer = Number(prompt(`Your answer`));
+console.log(answer);
+
+console.log(question.get(question.get('correct') === answer));
+
+// Convert map to array
+console.log([...question]);
+console.log(question.entries());
+console.log([...question.keys()]);
+console.log([...question.values()]);
+
+
+// Now the question is, string is a primitive data type. then how does it has methods?
+// Behind the scene js converts our string to object. this process is callled boxing.
+// it takes our string and puts it into a box
+// it convers somethig like this behind the scene
+console.log(new String('Khalid'));
+console.log(typeof new String('Khalid')); //object
+
+console.log(airline.toLowerCase());
+console.log(airline.toUpperCase());
+
+// Fix Capitalizaton in name
+const passenger = 'jOnAS'; // Jonas
+
+console.log(passenger[0].toUpperCase() + passenger.slice(1).toLowerCase());
+
+// Comparing Emails
+const email = 'hello@jonas.io';
+const loginEmail = '   Hello@Jonas.Io \n';
+
+console.log(loginEmail.toLowerCase().trim() === email);
+
+
+// replacing
+const priceGB = '288,97@';
+const priceUS = priceGB.replace(',','.').replace('@','$');
+
+console.log(priceUS);
+
+const announcement = `All passengers come to boarding door 23. Boarding door 23!`;
+console.log(announcement.replace('door','gate')); //first door will be replaced by gate
+console.log(announcement.replace(/door/g, 'gate'));
+
+// Booleans
+const airplane = 'Airbus A320neo';
+console.log(airplane.includes('A320'));
+console.log(airplane.includes('Boeing'));
+console.log(airline.startsWith('Airb'));
+
+if(plane.startsWith('Airbus') && plane.endsWith('neo')){
+  console.log('Part of the NEW Airbus family');
+}
+
+// Practice exercise
+const checkBaggage = function(items){
+  const baggage = items.toLowerCase();
+
+  if(baggage.includes('knife') || baggage.includes('gun')){
+    console.log('You are not allowed on board');
+  }else{
+    console.log('Welcome abroad!');
+  }
+}
+
+checkBaggage('I have a laptop, some Food and pocket Knife');
+checkBaggage('Socks and Camera');
+checkBaggage('Got some snacks and a gun for protection');
+
+console.log(`a+very+nice+string`.split('+'));
+console.log(`Jonas Schmedtmann`.split(' '));
+
+const [firstName,lastName] = 'Jonas Schmedtmann'.split(' ');
+
+const newName = ['Mr.',firstName,lastName.toUpperCase()].join(' ');
+console.log(newName);
+
+
+const capitalizeName = (name) => {
+  console.log(name.split(' ').map(n => n[0].toUpperCase()+n.slice(1).toLowerCase()).join(' '));
+}
+
+capitalizeName('jessica ann smith davis');
+capitalizeName('khalid MaHmud');
+
+
+// Padding
+const message = 'Go to gate 23!';
+console.log(message.padStart(25,'+')); // string length is 25
+console.log('Jonas'.padStart(25,'+').padEnd(30,'+'));
+
+
+const maskCreditCard = function(number){
+  const str = number + '';
+  const last = str.slice(-4);
+
+  return last.padStart(str.length,'*');
+}
+
+console.log(maskCreditCard(456465591));
+
+
+// Repeat
+
+const message2 = 'Bad Weather... All Departues Delayed';
+console.log(message2.repeat(5));
+
+
+const planesInLine = (n) =>{
+  console.log(`There are ${n} planes in line ${'✈️'.repeat(n)}`);
+}
+
+planesInLine(5);
+planesInLine(3);
+planesInLine(12);
+
+
+// Maps: Fundamentals
+const rest = new Map();
+rest.set('name','Sultans Dine');
+rest.set(1,'Bangladesh, Gulshan');
+
+console.log(rest.set(2,'Dhaka,Pabna'));
+
+rest
+.set('categories', ['Italian','Pizzeria','Vegetarian','Organic'])
+.set('open',11)
+.set('close',23)
+.set(true, 'We are open :D')
+.set(false,'We are closed :(');
+
+console.log(rest.get('name'));
+console.log(rest.get(true));
+console.log(rest.get(1));
+
+const time = 23;
+
+console.log(rest.get(time> rest.get('open') && time == rest.get('close')));
+
+console.log(rest.has('categories'));
+rest.delete(2);
+// rest.clear();
+console.log(rest);
+console.log(rest.size);
+
+rest.set([1,2],'Test');
+console.log(rest);
+console.log(rest.size);
+
+console.log(rest.get([1,2])); //undefined, because they are not same object in the heap
+
+// so the solution is
+
+const arr = [1,2];
+rest.set(arr,'Test');
+rest.set(document.querySelector('h1'),'Heading');
+console.log(rest);
+console.log(rest.size);
+console.log(rest.get(arr));
+
+
+// Sets
+const ordersSet = new Set(['Pasta','Pizza','Pizza','Risotto','Pasta','Pizza']);
+console.log(ordersSet); //all the duplicates are gone!
+
+// string are also iterable
+console.log(new Set('Jonas'));
+console.log(ordersSet.size); // how many different meals will be cooked
+
+console.log(ordersSet.has('Pizza')); // similar to includes method in arrays
+console.log(ordersSet.has('Bread'));
+
+// in set, order is not important
+
+ordersSet.add('Garlic Bread');
+ordersSet.add('Garlic Bread');
+
+console.log(ordersSet);
+ordersSet.delete('Risotto');
+console.log(ordersSet);
+
+// ordersSet.clear();
+// sets are iterable, so can loop over it elements
+for(const order of ordersSet) console.log(order);
+
+// Example
+const staff = ['Waiter','Chef','Waiter','Manager','Chef','Waiter'];
+const staffUnique = [...new Set(staff)];
+console.log(staffUnique);
+
+console.log(new Set(['Waiter','Chef','Waiter','Manager','Chef','Waiter']).size);
+
+console.log(new Set('Khalidd').size);
+
+
+
+// Looping Objects: Object Keys, Values and Entries
+
+// we can loop over arrays which are iterable
+// but we can also loop over objects which are not iterable
+
+//PROPERTY NAMES
+const properties = Object.keys(openingHours);
+console.log(properties);
+
+let openStr = `We are open on ${properties.length} days:`
+
+for(const day of properties){
+  openStr += `${day}`;
+}
+
+console.log(openStr);
+
+// Property VALUES
+const values = Object.values(openingHours);
+console.log(values);
+
+
+//Entire Object
+const entries = Object.entries(openingHours);
+console.log(entries);
+
+for(const [key,{open,close}] of entries){
+  // console.log(x);
+  console.log(`On ${key} we open at ${open} and close at ${close}`);
+}
+
+
+
+
+// Optional Chaining
+
+// console.log(restaurant.openingHours.mon.open); // error
+console.log(restaurant.openingHours.thu);
+
+if(restaurant.openingHours && restaurant.openingHours.mon){
+  console.log(restaurant.openingHours.mon.open);
+}
+
+//with optional chaining
+//return undefined if 'mon' does not exist!
+console.log(restaurant.openingHours.mon?.open);
+console.log(restaurant.openingHours?.mon?.open);
+// console.log(restaurant.openingHours.mon.open);//type error
+
+
+// Example
+
+const days = ['mon','tue','wed','thu','fri','sat','sun'];
+
+for(const day of days){
+  // const open = restaurant.openingHours[day]?.open || 'closed';
+  const open = restaurant.openingHours[day]?.open ?? 'closed';
+  console.log(`On ${day}, we open at ${open}`);
+}
+
+// Methods
+console.log(restaurant.order?.(0,1) ?? 'Method does not exist');
+console.log(restaurant.orderRisotoo?.(0,1) ?? 'Method does not exist!');
+
+// Arrays
+const users = [
+  {
+    name:  'Khalid',
+    email: 'khalid@gmail.com'
+  }
+];
+
+console.log(users[0]?.name ?? 'User array empty');
+
+//old approach
+if(users.length > 0) console.log(users[0].name);
+else console.log(`user array empty`);
+
+
+// 7. Looping Arrays : The for-of loop
+const menu = [...restaurant.starterMenu, ...restaurant.mainMenu];
+
+for(const item of menu) console.log(item);
+
+for(const item of menu.entries()){
+  console.log(`${item[0] + 1}: ${item[1]}`);
+}
+
+for(const {index,element} of menu.entries()){
+  console.log(`${index+1}: ${element}`);
+}
+
+
+console.log([...menu.entries()]);
+
 
 // 6. Logical Assignment Operators
 
@@ -348,3 +724,33 @@ const [p=1, q=1,r=1] = [8,9];
 console.log(p,q,r);
 
 */
+
+
+// String Methods Practice
+
+const allFlights =
+  '_Delayed_Departure;fao93766109;txl2133758440;11:25+_Arrival;bru0943384722;fao93766109;11:45+_Delayed_Arrival;hel7439299980;fao93766109;12:05+_Departure;fao93766109;lis2323639855;12:30';
+
+// 🔴 Delayed Departure from FAO to TXL (11h25)
+//              Arrival from BRU to FAO (11h45)
+//   🔴 Delayed Arrival from HEL to FAO (12h05)
+//            Departure from FAO to LIS (12h30)
+
+
+// first solution
+// allFlights.split('+').forEach(flight =>{
+//    let pieces = flight.split(';');
+//    console.log(`${pieces[0].split('_').join(' ').slice(1)}  from ${pieces[1].slice(0,3).toUpperCase()} to ${pieces[2].slice(0,3).toUpperCase()} (${pieces[3].split(':')[0]}:${pieces[3].split('h')[1]})`);
+// })
+
+
+// second solution (smart way!)
+
+const getCode = str => str.slice(0,3).toUpperCase();
+
+for(const flight of flights.split('+')){
+  const [type,from,to,time] = flight.split(';');
+  const output = `${type.startsWith('_Delayed') ? '⚽' : ''}${type.replaceAll('_',' ')}${getCode(from)}${getCode(to)}(${time.replace(':','h')})`;
+  console.log(output);
+}
+
