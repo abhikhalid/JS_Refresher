@@ -54,7 +54,7 @@
 
 // // Arrow functions
 
-// // const calcAge3 = birthYear = 2037 - birthYear;
+// // const calcAge3 = birthYear => 2037 - birthYear;
 
 // // const age3 = calcAge3(1991);
 
@@ -107,7 +107,6 @@
 
 
 // //Introduction to Arrays
-
 
 // // const friend1 = 'Michael';
 // // const friend2 = 'Steven';
@@ -171,7 +170,7 @@
 // // console.log(popped);
 // // console.log(friends);
 
-// // friends.unshift(); //remove first element
+// // friends.unshift('kj'); //add first element
 // // console.log(friends);
 
 // // console.log(friends.indexOf('Steven'));

@@ -13,7 +13,7 @@
 // console.log(lastName);
 
 // //variable name can't start with number
-// //var. name should start with Upper case letter
+// //var. name should not start with Upper case letter
 
 // //let Person = 'jonas'
 
@@ -95,7 +95,7 @@
 
 // console.log(x);
 
-//comparison operators
+// comparison operators
 // console.log(ageJonas > ageMartha);
 // console.log(ageMartha >=18);
 
@@ -209,7 +209,7 @@
 // let height;
 
 // if(height){
-//     console.log("YAY! Height eis defined!");
+//     console.log("YAY! Height is defined!");
 // }else{
 //     console.log("Height is UNDEFINED!");
 // }

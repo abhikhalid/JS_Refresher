@@ -25,6 +25,8 @@ console.log(arr);
 arr.slice(1, 2);
 console.log(arr);
 
+// Slice does not modify the original array and return then modified array, but splice does modify the array and return the deleted array.
+
 // REVERSE
 arr = ['a', 'b', 'c', 'd', 'e'];
 
@@ -83,7 +85,7 @@ movements.forEach(function (movement, i, array) {
 });
 */
 
-// Continue and Break statement do not work with foreach loop
+// Continue and Break statement do not work with foreach loop, map, filter
 
 // ForEach with Map and Set
 

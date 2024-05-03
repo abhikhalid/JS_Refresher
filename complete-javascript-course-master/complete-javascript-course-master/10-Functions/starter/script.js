@@ -1,5 +1,17 @@
 'use strict';
 
+//objects are value in js
+// function are objects. so, functions are also value
+
+// thats why we can store function to a variabe.
+
+// arrays are objects in js. and we know objects can contain value
+// so arrays has different method like push, pop, shift, unshift etc.
+
+// as we can return a value from a function, so we
+// should also be able to return a function from a function as function are value
+
+
 /*
 ///////////////////////////////////////
 // Default Parameters
@@ -38,6 +50,8 @@ const jonas = {
   name: 'Jonas Schmedtmann',
   passport: 24739479284,
 };
+
+// Arrays, Objects, functions are reference type
 
 const checkIn = function (flightNum, passenger) {
   flightNum = 'LH999';
@@ -126,7 +140,7 @@ greet('Hello')('Mahmud');
 
 // The call and apply methods
 
-// call, apply and bind method allows us to set this keyword manually to any function call
+// call, apply and bind method allows us to set this keyword manually to any function call.
 
 /*
 const BangladeshBiman = {
