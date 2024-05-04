@@ -29,19 +29,19 @@
 
 // There are 3 ways!
 // i. Constructor functions
-    //   👉 Technique to create objects from a function.
-    //   👉 This is how built-in object like Arrays, Maps or Sets are actually implemented.
-    //   👉 This is also how OOP is done is javascript basically since the beginning.
+//   👉 Technique to create objects from a function.
+//   👉 This is how built-in object like Arrays, Maps or Sets are actually implemented.
+//   👉 This is also how OOP is done is javascript basically since the beginning.
 
 
 //ii. ES6 Classes
-    //   👉 Modern alternative to constructor function syntax.
-    //   👉 'Syntactic sugar': behind the scene, ES6 classes work exactly like constructor functions.
-    //   👉 ES6 classes do not behave like classes in 'classical OOP'.
+//   👉 Modern alternative to constructor function syntax.
+//   👉 'Syntactic sugar': behind the scene, ES6 classes work exactly like constructor functions.
+//   👉 ES6 classes do not behave like classes in 'classical OOP'.
 
 
 //iii. Object.create()
-    //   👉 The easiest and most straightforward way of linking an object to a prototype object.
+//   👉 The easiest and most straightforward way of linking an object to a prototype object.
 
 // i.Constructor Functions and the new operator
 // *** Arrow functions will not work as a constructor function as it does not have its own this keyword. ***
@@ -202,7 +202,6 @@ class PersonCl {
         this.birthYear = birthYear;
     }
 
-
     //Instance method
     //all methods of class will be on the .prototype of the objects
 
@@ -218,9 +217,11 @@ class PersonCl {
 
     //Getter and Setter looks like property, but it's actually function!
     get age() {
-        console.log(new Date().getFullYear() - this.birthYear);
+        return new Date().getFullYear() - this.birthYear;
     }
 
+
+    //set a property that already exists.
     set fullName(name) {
         console.log(name);
 
@@ -229,25 +230,22 @@ class PersonCl {
     }
 
     get fullName() {
-
-
-        return this._fullName;
-    }
-
-
-    get fullName() {
         return this._fullName;
     }
 
     // static method
     static hey() {
-        console.log(`Hey there`);
+        console.log(`Hey there 👋`);
+        console.log(this); //here this keyword is simply PersonC1 constructor function.
     }
 }
 
 const sajib = new PersonCl('Sajib khan', 1996);
 console.log(sajib);
 sajib.calcAge();
+
+
+console.log(`Sajib's Age : ${sajib.age}`);
 
 console.log(sajib.__proto__ === PersonCl.prototype);
 
@@ -259,25 +257,142 @@ PersonCl.prototype.greet = function () {
 
 sajib.greet();
 
-const walter = new PersonCl('Walter White', 1965);
-
-
-
+const walter = new PersonCl('Walter', 1965);
 console.log(walter);
+
 
 PersonCl.hey();
 
 //static method
+
+//Array.from method converts an array like structure to a real array.
+// from() method is attached to the Array constructor. not the prototype of the constructor
+console.log(Array.from(document.querySelectorAll('h1')));
 
 // PersonCl.hey = function () {
 //     console.log(`Hey there`);
 //     console.log(this);
 // }
 
-// Person.hey();
+//  Person.hey();
 // sajib.hey(); //wrong
+
 
 
 //1. classes are not hoisted
 //2. classes are first-class citizens
 //3. Classes are executed in strict mode
+
+
+// Setters and Getters
+
+// Every object in javascript can have getter and setter properties.
+
+// we call these special properties 'assessor' properties.
+// while the more normal properties are called 'data' properties.
+
+// getters and setters are basically functions that get and set a value. but on the outside they still look like regular properties.
+
+
+const account = {
+    owner: 'jonas',
+    movements: [200, 530, 120, 300],
+
+    get latest() {
+        return this.movements.slice(-1).pop();
+    },
+
+    set latest(mov) {
+        this.movements.push(mov);
+    },
+};
+
+console.log(account.latest);
+
+account.latest = 50;
+console.log(account.movements);
+
+
+
+
+//////////////////////////////////////////
+
+///////////////////////////////////////
+// Coding Challenge #2
+
+/* 
+1. Re-create challenge 1, but this time using an ES6 class;
+2. Add a getter called 'speedUS' which returns the current speed in mi/h (divide by 1.6);
+3. Add a setter called 'speedUS' which sets the current speed in mi/h (but converts it to km/h before storing the value, by multiplying the input by 1.6);
+4. Create a new car and experiment with the accelerate and brake methods, and with the getter and setter.
+
+DATA CAR 1: 'Ford' going at 120 km/h
+
+GOOD LUCK 😀
+*/
+
+// Object.create()
+
+const PersonProto = {
+    calcAge() {
+        console.log(new Date().getFullYear() - this.birthYear);
+    },
+
+    init(firstName, birthYear) {
+        this.firstName = firstName;
+        this.birthYear = birthYear;
+    }
+}
+
+//Object.create() returns an empty object and sets object to it's prototype.
+const steven = Object.create(PersonProto);
+console.log(steven);
+
+steven.name = 'Steven';
+steven.birthYear = 2002;
+steven.calcAge();
+
+console.log(steven.__proto__ === PersonProto);
+
+const sarah = Object.create(PersonProto);
+sarah.init('Sarah', 1979);
+sarah.calcAge();
+
+
+/////////////////////////////////////////////////////
+
+
+
+class CAR {
+    constructor(make, speed) {
+        this.make = make;
+        this.speed = speed;
+    }
+
+    accelerate() {
+        this.speed += 10;
+        console.log(`${this.make} is going at ${this.speed} km/h`);
+    }
+
+    brake() {
+        this.speed -= 5;
+        console.log(`${this.make} is going at ${this.speed} km/h`);
+    }
+
+    get speedUS() {
+        return this.speed / 1.6;
+    }
+
+    set speedUS(speed) {
+        this.speed = speed * 1.6;
+    }
+}
+
+const ford = new CAR('Ford', 120);
+console.log(ford.speedUS);
+ford.accelerate();
+ford.accelerate();
+ford.brake();
+
+ford.speedUS = 50;
+console.log(ford);
