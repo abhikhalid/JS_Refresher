@@ -1,0 +1,17 @@
+JS is single threaded programming language. Then the question is, how can asynchronous code be executed in a non blocking way? If there is
+only one thread of executing in the engine? The answer is EVENT LOOP.
+
+DOM is not really part of the JavaScript, but of the WEB APIs. So, it's the web API's environment where the asynchronous task related to the DOM will run. And the same is true for the timer, AJAX call and really all other asynchronous call. So these asynchronous task will all run
+in the web API environment of the browser.
+
+New callback function would of course go straight to the end of the queue. And there it would sit patiently for its turn to finally run. And this actually has big implications. So, imagine that you set a timer for five seconds. After five seconds, timer's callback will be put on the callback queue from the WEB APIs. And let's say there were already other callbacks awaiting. And lets say took 1 seconds to run all those callback. Then in that case, your timers callback would only run after six seconds and not after five.
+
+5 Second for the timer + 1 second to run all other callbacks that were already waiting in line in front of your timer.
+
+so, The timer duration that you define is not a guarantee, the only guarantee is the timer callback will not run before five seconds.
+
+It all depends on the state of the callback queue. Thats why we say JavaScript language has no sense of time.
+
+so, What EVENT LOOP DOES? (DECIDES when each callback is executed: orchestration)
+- It looks into the call stack and determines whether it's empty or not except of course for the global context. Then if the stack is indeed empty which means that there's currently no code being executed then it will take the first callback from the callback queue and put it on the call stack to be executed. And this is called event loop tick.
+So each time the event loop takes a callback from the callback queue. We say that there was an event loop tick.
