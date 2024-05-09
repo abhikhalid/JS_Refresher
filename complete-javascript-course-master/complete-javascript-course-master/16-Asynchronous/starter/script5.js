@@ -4,7 +4,7 @@ const countriesContainer = document.querySelector('.countries');
 
 // ES2017 has a better way of handling promises. It makes our code look like regular synchronous code wile behind the scenees, everything is in fact asynchronous.
 
-// Async function : A function that will basically keep ruinning in the background while performing the code that insdie of it.
+// Async function : A function that will basically keep running in the background while performing the code that inside of it.
 
 // This function will not block (call stack) main thread of the execution, it will run in the background.
 
@@ -124,7 +124,7 @@ catch(err){
 
 */
 
-// Ofcourse we will not use try catch for our code mistakes, let's now use it in more appropite place.
+// Of-course we will not use try catch for our code mistakes, let's now use it in more appropriate place.
 
 /*
 
@@ -226,7 +226,7 @@ const city = whereAmI();
 // console.log(city); // promise, because async func. always return a promise
 
 whereAmI()
-.then(city =>  console.log(city)) // undefined, that means function retunrs error but it is still resolved! If you want to fix it, rethrow the error from catch block
+.then(city =>  console.log(city)) // undefined, that means function returns error but it is still resolved! If you want to fix it, rethrow the error from catch block
 .catch(err => console.error(`2: ${err.message}`));
 
 console.log('3: Finished getting location');

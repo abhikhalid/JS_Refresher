@@ -18,13 +18,13 @@ const get3Countries = async function(c1,c2,c3){
 
         //but problem is, why should the second ajax call should wait for first one? and the third ajax call wait for the second one?
         //since, every ajax call is independent here.
-        //instead of running these promises in sequence, we can actullay run them in parallel.
+        //instead of running these promises in sequence, we can actually run them in parallel.
 
         // Promise.all() receives an array and it also returns an array.
         // If one of the promises reject in Promise.all() then the whole promise.all() actually rejects as well.
-        // So, promise.all() shorcircuits when one promise rejects.
+        // So, promise.all() short circuits when one promise rejects.
 
-       const data = await Promise.all([getJSON(`https://restcountries.com/v3.1/name/${c1}`),
+       const data = await Promise.all([await getJSON(`https://restcountries.com/v3.1/name/${c1}`),
                 await getJSON(`https://restcountries.com/v3.1/name/${c2}`),
                 await getJSON(`https://restcountries.com/v3.1/name/${c3}`)]
             );
