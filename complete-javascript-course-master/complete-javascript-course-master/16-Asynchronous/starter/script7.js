@@ -10,15 +10,81 @@ const getJSON = function (url, errorMsg = 'Something went wrong') {
 
             return response.json();
         });
-}
+};
+
+(async  () => {
+    const res = await Promise.race([
+        getJSON(`https://restcountries.com/v3.1/name/bangladesh`),
+        getJSON(`https://restcountries.com/v3.1/name/india`),
+        getJSON(`https://restcountries.com/v3.1/name/pakistan`)
+    ]);
+    console.log(res);
+    console.log(res[0]);
+})();
 
 
-    (async function () {
-        const res = await Promise.race([
-            getJSON(`https://restcountries.com/v3.1/name/bangladesh`),
-            getJSON(`https://restcountries.com/v3.1/name/india`),
-            getJSON(`https://restcountries.com/v3.1/name/pakistan`),
-        ]);
+// Promse.race is actually very useful to prevent never ending promises or also very long running promises.
+// For example, if your user has a very bad internet connection, the a fetch reqeust in your application might take way too long
+// to actually be useful. So, we can create a special time out promise, which automatically rejects after a certain time has passed.
+// _ = throw away variable
 
-        console.log(res[0]);
-    })();
+const timeout = function(seconds){
+    return new Promise(function(_,reject){
+        setTimeout(()=>{
+            reject(new Error('request took too long!'));
+        },seconds*1000);
+    })
+};
+
+Promise.race([
+    getJSON(`https://restcountries.com/v3.1/name/bangladesh`),
+    timeout(1)
+])
+.then(res => console.log(res[0]))
+.catch(err => console.error(err));
+
+
+
+
+// Promise.allSettled (comes from ES2020)
+
+// takes an array of promise and it will return an array of all the settled promises.
+// And so agian, no matter if the promises got rejected or not.
+
+// It's similar to Promise.all in regard that it also returns an array of all the results.
+// but the difference is that, Promise.all() will short circuit as soon as one promise rejects,but promise.allSettled() simply never short circuits.
+
+// Promise.allSettled() : it will simply return all the results of all the promises.
+
+Promise.allSettled([
+    Promise.resolve('Success'), //it creates a promise automatically and resolves
+    Promise.reject('ERROR'),
+    Promise.resolve('Another success'),
+]).then(res => console.log(res));
+
+
+
+Promise.all([
+    Promise.resolve('Success'), //it creates a promise automatically and resolves
+    Promise.reject('ERROR'),
+    Promise.resolve('Another success'),
+]).then(res => console.log(res))
+.catch(err => console.error(err));
+
+
+// Promise.any() is ES2021
+// takes multiple promises and this one will then return the first fullfilled promise
+// Similar to Promise.race()
+// difference is rejected promises are ignored.
+// so, Promsie.any() is gonna be always a fulfilled promsie. unless ofcourse all of them are reject.
+
+Promise.any([
+    Promise.resolve('Success'), //it creates a promise automatically and resolves
+    Promise.reject('ERROR'),
+    Promise.resolve('Another success'),
+]).then(res => console.log(res))
+.catch(err => console.error(err));
+
+
+
+
