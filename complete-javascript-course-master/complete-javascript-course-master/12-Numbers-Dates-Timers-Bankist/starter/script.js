@@ -275,22 +275,23 @@ console.log(+'23');
 console.log(Number.parseInt('30px',10)); //30
 console.log(Number.parseInt('e23',10)); //NaN
 
-console.log(Number.parseInt(' 2.5rem '));
-console.log(Number.parseFloat(' 2.5rem '));
+console.log(Number.parseInt(' 2.5rem ')); // 2
+console.log(Number.parseFloat(' 2.5rem ')); //2.5
 
 // Check if value is NaN
 console.log(Number.isNaN(20));// false
 console.log(Number.isNaN('20'));// true
 console.log(Number.isNaN(+'20X'));// true
-console.log(Number.isNaN(23/0));
+console.log(Number.isNaN(23/0)); // false
 
 // Checking if value is number
-console.log(Number.isFinite(20));
-console.log(Number.isFinite('20'));
-console.log(Number.isFinite(+'20X'));
-console.log(Number.isFinite(23/0));
+console.log(Number.isFinite(20)); // true
+console.log(Number.isFinite('20')); //false
+console.log(Number.isFinite(+'20X')); // false
+console.log(Number.isFinite(23/0)); // false
 
-console.log(Number.isInteger(23));
-console.log(Number.isInteger(23.0));
-console.log(Number.isInteger(23/0));
+console.log(Number.isInteger(23)); // true
+console.log(Number.isInteger(23.0)); // true
+console.log(Number.isInteger(23.2)); // false
+console.log(Number.isInteger(23/0)); //false
 
