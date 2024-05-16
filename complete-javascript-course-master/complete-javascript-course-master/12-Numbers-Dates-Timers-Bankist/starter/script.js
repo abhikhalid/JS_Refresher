@@ -164,7 +164,7 @@ btnLogin.addEventListener('click', function (e) {
   );
   console.log(currentAccount);
 
-  if (currentAccount?.pin === Number(inputLoginPin.value)) {
+  if (currentAccount?.pin === +inputLoginPin.value) {
     // Display UI and message
     labelWelcome.textContent = `Welcome back, ${
       currentAccount.owner.split(' ')[0]
@@ -182,7 +182,7 @@ btnLogin.addEventListener('click', function (e) {
 
 btnTransfer.addEventListener('click', function (e) {
   e.preventDefault();
-  const amount = Number(inputTransferAmount.value);
+  const amount = +inputTransferAmount.value;
   const receiverAcc = accounts.find(
     acc => acc.username === inputTransferTo.value
   );
@@ -206,7 +206,7 @@ btnTransfer.addEventListener('click', function (e) {
 btnLoan.addEventListener('click', function (e) {
   e.preventDefault();
 
-  const amount = Number(inputLoanAmount.value);
+  const amount = +inputLoanAmount.value;
 
   if (amount > 0 && currentAccount.movements.some(mov => mov >= amount * 0.1)) {
     // Add movement
@@ -223,7 +223,7 @@ btnClose.addEventListener('click', function (e) {
 
   if (
     inputCloseUsername.value === currentAccount.username &&
-    Number(inputClosePin.value) === currentAccount.pin
+    +inputClosePin.value === currentAccount.pin
   ) {
     const index = accounts.findIndex(
       acc => acc.username === currentAccount.username
@@ -251,3 +251,46 @@ btnSort.addEventListener('click', function (e) {
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
 // LECTURES
+
+// Converting and Checking Numbers
+
+// In JS, all numbers are treated as floatinmg point number.
+console.log(23 === 23.0); // true
+// Also, Numebers are represented internally in a 64 base 2 format. that means numbers are alwasy stored in a binary format. So, basically they are only composed of zeros and ones.
+// In this binary form, it's very difficult to represent some fractions that are very easy to represnt in the base 10 system that we are used to.
+// Base 10 - 0 to 9
+// Binary base 2 - 0,1
+
+// there are certain numbers that are very difficult to represnt in base 2.
+console.log(0.1+0.2); //0.30000000000000004 (should have been 0.3 but js has no better way to represent this number.)
+
+// you can not do like precise scientific calculation or financial calculation in js. otherwise you would face problem like this
+console.log(0.1+0.2 === 0.3); // false but should have been true
+
+console.log(Number('23'));
+console.log(+'23');
+
+
+// Parsing
+console.log(Number.parseInt('30px',10)); //30
+console.log(Number.parseInt('e23',10)); //NaN
+
+console.log(Number.parseInt(' 2.5rem '));
+console.log(Number.parseFloat(' 2.5rem '));
+
+// Check if value is NaN
+console.log(Number.isNaN(20));// false
+console.log(Number.isNaN('20'));// true
+console.log(Number.isNaN(+'20X'));// true
+console.log(Number.isNaN(23/0));
+
+// Checking if value is number
+console.log(Number.isFinite(20));
+console.log(Number.isFinite('20'));
+console.log(Number.isFinite(+'20X'));
+console.log(Number.isFinite(23/0));
+
+console.log(Number.isInteger(23));
+console.log(Number.isInteger(23.0));
+console.log(Number.isInteger(23/0));
+

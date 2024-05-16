@@ -3,6 +3,9 @@
 'use strict';
 
 
+// When we convert an object to string and then convert the string to object, we lost the prototype chain.
+// this can be a big problem, when you work with local storage and object-oriented programming.
+
 class Workout{
     date = new Date();
     id =  (Date.now() + '').slice(-10);
@@ -88,9 +91,15 @@ class App{
 
     constructor() {
         // this.workouts = [];
-        this._getPosition();
-        form.addEventListener('submit',this._newWorkout.bind(this));
 
+        // Get user's position
+        this._getPosition();
+
+        // Get Data from local storage
+        this._getLocalStorage();
+
+        // Attach event handlers
+        form.addEventListener('submit',this._newWorkout.bind(this));
         inputType.addEventListener('change',this._newWorkout.bind(this));
         containerWorkouts.addEventListener('click',this._moveToPopup.bind(this));
     }
@@ -119,6 +128,11 @@ class App{
 
          // Handling clicks on map
          this.#map.on('click',this._showForm.bind(this));
+
+         this.#workouts.forEach(work => {
+            this._renderWorkout(work);
+            this._renderWorkoutMarker(work);
+       });
     }
 
     _showForm(mapE){
@@ -197,6 +211,9 @@ class App{
 
         // Hide form + clear input fields
         this._hideForm();
+
+        // Set local storage to all workouts
+        this._setLocalStorage();
     }
 
 
@@ -280,11 +297,43 @@ class App{
         });
 
         // using the public interface
-        workout.click();
+        // workout.click();
+    }
+
+    _setLocalStorage(){
+        //local storage is another api that browser provides us.
+        // you shouldn't use local storage for large amount of data. that will surely slow down your application.
+        localStorage.setItem('workouts',JSON.stringify(this.#workouts));
+    }
+
+    _getLocalStorage(){
+       const data = JSON.parse(localStorage.getItem('workouts'));
+       console.log(data);
+
+       if(!data) return;
+
+       this.#workouts = data;
+    }
+
+    reset(){
+        localStorage.removeItem('workouts');
+        location.reload();
     }
 
 }
 
 const app = new App();
+// app.reset();
 
+
+// ADDITIONAL FEATURE IDEAS : CHALLENGES
+// i. Ability to edit a workout
+// ii. Ability to delete a workout from UI.
+/// iii. Ability to delete all workouts from UI.
+//  iv. Ability to sort workouts by a certain field. (eg. distance)
+// v.  Re-build Running and Cycling objects coming from local storage. (fix the prototype chain issue)
+// vi. More realistic error and confimration messages insteaf of allert. Fade out the message after some time.
+// vii. Ability to position the map to show all workouts. [very hard. read leaflet documentation]
+// viii. Ability to draw lines and shapes instead of just points.
+// ix. Display weather data for workout time and place.
 
