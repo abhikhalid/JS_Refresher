@@ -36,6 +36,9 @@ document.addEventListener('keydown', function (e) {
 // Selecting, Creating and Deleting Elements
 
 // Selecting Elements
+
+
+
 console.log(document.documentElement);
 console.log(document.head);
 console.log(document.body);
@@ -102,7 +105,7 @@ console.log(getComputedStyle(message).height); // does not exist anywhere so bro
 
 message.style.height = Number.parseFloat(getComputedStyle(message).height,10) + 40 + 'px';
 
-document.documentElement.style.setProperty('--color-primary','orangered');
+// document.documentElement.style.setProperty('--color-primary','orangered');
 
 
 // Attributes
@@ -143,3 +146,34 @@ logo.classList.contains('c','j','k'); //just writing fake class name
 
 // logo.className = 'jonas'; // don't use this because this will override all the existing classes.
 
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Implementing Smooth Scrooling
+const btnScrollTo = document.querySelector('.btn--scroll-to');
+const section1 = document.querySelector('#section--1');
+
+btnScrollTo.addEventListener('click', (e)=>{
+    const s1coords = section1.getBoundingClientRect();
+    console.log(s1coords);
+
+    console.log(e.target.getBoundingClientRect());
+
+    console.log('Current scroll (X/Y)',window.pageXOffset, window.pageYOffset);
+
+    console.log('height/width viewport',document.documentElement.clientHeight, document.documentElement.clientWidth);
+
+    // Scrolling
+    //window.scrollTo(s1coords.left, s1coords.top); // does not work properly? right? because getBoundingClientRect() returns with respect to viewport not document
+    // window.scrollTo(s1coords.left + window.pageXOffset, s1coords.top + window.pageYOffset);
+
+    // to add animation
+    // window.scrollTo({
+    //   left: s1coords.left + window.pageXOffset,
+    //   top: s1coords.top + window.pageYOffset,
+    //   behavior: 'smooth',
+    // });
+
+
+    // Modern way
+    section1.scrollIntoView({behavior:'smooth'});
+});
