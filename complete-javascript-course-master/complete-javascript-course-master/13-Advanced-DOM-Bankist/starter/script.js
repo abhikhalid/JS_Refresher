@@ -31,6 +31,7 @@ document.addEventListener('keydown', function (e) {
 });
 
 
+
 ////////////////////////////////////////////////////
 ///////////////////////////////////////////////////
 // Selecting, Creating and Deleting Elements
@@ -248,21 +249,42 @@ const randomColor = () => {
   return`rgb(${randomInt(0,255)},${randomInt(0,255)},${randomInt(0,255)})`;
 }
 
-document.querySelector('.nav__link').addEventListener('click', (e)=>{
+document.querySelector('.nav__link').addEventListener('click', function(e){
   this.style.backgroundColor = randomColor();
   console.log(`LINK`, e.target, e.currentTarget);
   console.log(e.currentTarget === this);
 
   // Stop propagation
-  e.stopPropagation();
+  // e.stopPropagation();
 });
 
-document.querySelector('.nav__links').addEventListener('click', (e)=>{
+document.querySelector('.nav__links').addEventListener('click', function(e){
   this.style.backgroundColor = randomColor();
   console.log('CONTAINER',e.target, e.currentTarget);
 });
 
-document.querySelector('.nav').addEventListener('click', (e)=>{
+// document.querySelector('.nav').addEventListener('click', function(e){
+//   this.style.backgroundColor = randomColor();
+//   console.log('NAV',e.target, e.currentTarget);
+// });
+
+// So I mentioned that at event listener here, it's only listening for events in the bubbling phase, but not in the capturing phase.
+// So that is the default behavior of the add event listener method, and the reason for that is that the capturing phase is usually irrelevant for us.
+// It's just not that useful. Now, on the other hand, the bubbling phase can be very useful for something called event delegation.
+// So that's something that we're going to do in the next lecture. However, if we really do want to catch events during the capturing phase,
+// we can define a third parameter in the addEventlistener function. For example here, we can set the third parameter to true or false.
+// And so let's set it to true. And so in this case where this used capture parameter is set to true
+
+document.querySelector('.nav').addEventListener('click', function(e){
   this.style.backgroundColor = randomColor();
   console.log('NAV',e.target, e.currentTarget);
-});
+},true);
+
+// Capturing is rarely used these days.
+
+
+// Event Delegation: Implementing page navigation
+
+// let's now use the power of event bubbling to implement something called event delegation.
+
+// go to the top
