@@ -181,3 +181,4 @@ window.addEventListener('beforeunload', function (e) {
 
     e.returnValue = ''; // in order to display a leaving confirmation, we need to set the return value on the event to an empty string.
 });
+
