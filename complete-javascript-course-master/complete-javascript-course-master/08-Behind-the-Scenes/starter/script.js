@@ -306,7 +306,7 @@ console.log(addVarFunctionArrow(2, 3)); // Uncaught TypeError: addVarFunctionArr
 
 var addVarFunctionExpression = function (a, b) {
     return a + b;
-} 
+}
 
 var addVarFunctionArrow = (a, b) => a + b;
 
@@ -323,7 +323,7 @@ if (!numProducts) { // undefined due to hoisting. it treats like this if(!undefi
     // why that happen? it's because of hoisting. 
 }
 
-var numProducts = 10; 
+var numProducts = 10;
 
 function deleteShoppingCart() {
     console.log('All products deleted!');
@@ -374,9 +374,9 @@ console.log(z === window.z); //false
 
 // ✈️✈️ The this keyword in Practice
 // this keyword always point to the object that is calling the method.
-console.log(this); 
+console.log(this);
 
-const calcAge = function (birthYear){
+const calcAge = function (birthYear) {
     console.log(2037 - birthYear);
     console.log(this); // undefined
 }
@@ -400,7 +400,7 @@ const jonas = {
         console.log(2037 - this.year);
     }
 }
-jonas.calcAge(); 
+jonas.calcAge();
 
 // this keyword always point to the object that is calling the method. Prove?
 
