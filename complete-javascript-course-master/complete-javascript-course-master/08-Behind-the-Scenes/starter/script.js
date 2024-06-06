@@ -416,3 +416,111 @@ matilda.calcAge();
 const f = jonas.calcAge;
 f();
 
+
+// ✈️✈️ Regular Functions vs. Arrow Functions
+
+var firstName2 = 'Matilda'; // var keyword creates properties on the global object.
+
+const khalid = {
+    firstName2: 'Khalid',
+    year: 1991,
+    calcAge: function () {
+        console.log(this);
+        console.log(2037 - this.year);
+
+        const self = this;
+
+
+        /* const isMillenial = function () {
+             console.log(this); // undefined, rule s says that inside a regular function call, this keyword must be undefined
+             console.log(this.year >= 1981 && this.year <= 1996);
+         }
+ 
+         isMillenial(); */
+
+        //solution 1: before ES6 APPROACH
+        /*
+        const isMillenial = function () {
+            console.log(self); // undefined, rule s says that inside a regular function call, this keyword must be undefined
+            console.log(self.year >= 1981 && self.year <= 1996);
+        }
+
+        isMillenial(); */
+
+        // SOLUTION 2: Using arrow function 
+        // here arrow function simply use the this keyowrd of its parent scope.
+        const isMillenial = () => {
+            console.log(this); // undefined, rule s says that inside a regular function call, this keyword must be undefined
+            console.log(this.year >= 1981 && this.year <= 1996);
+        }
+
+        isMillenial();
+
+    },
+
+    // TIPS: you should never ever use arrow function as a method. since it does not contain this keyword property.
+    /* greet: () => {
+        console.log(this); //window
+        console.log(`Hey ${this.firstName2}`); // that's another reason why we shouldn't use var.
+    } */
+
+    greet: function () {
+        console.log(this);
+        console.log(`Hey ${this.firstName2}`);
+    }
+}
+
+khalid.greet();
+khalid.calcAge();
+
+
+// another difference between arrow and regular function is 'argument keyword'
+// Regular functions do have 'arguments' keyword
+// Arrow functions do not have 'arguments' keyword
+// though in modern js 'arguments' keyword is not necessary.  We use Rest Parameters
+
+const add1 = function (a, b) {
+    console.log(arguments);
+    return a + b;
+}
+
+add1(2, 5);
+add1(2, 5, 8, 12);
+
+const add2 = (a, b) => {
+    console.log(arguments); // Uncaught ReferenceError: arguments is not defined
+    return a + b;
+}
+
+
+
+// ✈️✈️ Primitives vs. Objects (Primitive vs Reference Types)
+
+// Primitives are like numbers, strings, booleans etc
+
+
+// Primitives: Number, String, Boolean, Undefined, Null, Symbol, BigInt
+// Objects: Object literal, Arrays, Functions and many more...
+
+// JS ENGINE : CALL STACK, HEAP
+
+// ALL our object types are stored right in the memory heap.
+// Primitives are stored in the CALL STACK. Primitive types are stored in 'Execution contexts' in which they are declared.
+
+let age = 30;
+let oldAge = age;
+age = 31;
+
+console.log(age);
+console.log(oldAge);
+
+const me = {
+    name: 'Jonas',
+    age: 30,
+};
+
+const friend = me;
+friend.age = 27;
+
+console.log('Friend:', friend);
+console.log('Me', me);
