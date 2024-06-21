@@ -617,6 +617,7 @@ const controlRecipes = async function() {
         // alert(err);
         (0, _recipeViewJsDefault.default).renderError();
     }
+// controlServings();
 };
 //Event Handlers in MVC: Publisher-Subscriber Pattern
 // window.addEventListener('hashchange', controlRecipes);
@@ -651,9 +652,17 @@ const controlPagination = function(goToPage) {
     (0, _paginationViewJsDefault.default).render(_modelJs.state.search);
 };
 // controlSearchResults();
+const controlServings = function(newServings) {
+    // Update the recipe servings (in state)
+    _modelJs.updateServings(newServings);
+    // Update the recipe view
+    // 2) Rendering recipe
+    (0, _recipeViewJsDefault.default).render(_modelJs.state.recipe);
+};
 const init = function() {
     // we just implemented Publisher-Subscriber Pattern.
     (0, _recipeViewJsDefault.default).addHandlerRender(controlRecipes);
+    (0, _recipeViewJsDefault.default).addHandlerUpdateServings(controlServings);
     (0, _searchViewJsDefault.default).addHandlerSearch(controlSearchResults);
     (0, _paginationViewJsDefault.default).addHandlerClick(controlPagination);
 };
@@ -2514,6 +2523,7 @@ parcelHelpers.export(exports, "state", ()=>state);
 parcelHelpers.export(exports, "loadRecipe", ()=>loadRecipe);
 parcelHelpers.export(exports, "loadSearchResults", ()=>loadSearchResults);
 parcelHelpers.export(exports, "getSearchResultsPage", ()=>getSearchResultsPage);
+parcelHelpers.export(exports, "updateServings", ()=>updateServings);
 var _runtime = require("regenerator-runtime/runtime"); //for polyfilling async/await
 var _config = require("./config");
 var _helper = require("./helper");
@@ -2570,6 +2580,13 @@ const getSearchResultsPage = function(page = state.search.page) {
     const start = (page - 1) * state.search.resultsPerPage; //0
     const end = page * state.search.resultsPerPage; //9
     return state.search.results.slice(start, end);
+};
+const updateServings = function(newServings) {
+    state.recipe.ingredients.forEach((ing)=>{
+        ing.quantity = ing.quantity * newServings / state.recipe.servings;
+        // newQt = oldQt * newServings / oldServings // 2 * 8 / 4 = 4
+        state.recipe.servings = newServings;
+    });
 } //  loadSearchResults('pizza');
 ;
 
@@ -2628,6 +2645,16 @@ class RecipeView extends (0, _viewDefault.default) {
         window.addEventListener("hashchange", handler);
         window.addEventListener("load", handler);
     }
+    addHandlerUpdateServings(handler) {
+        this._parentElement.addEventListener("click", function(e) {
+            const btn = e.target.closest(".btn--update-servings");
+            if (!btn) return;
+            console.log(btn);
+            const updateTo = btn.dataset.updateTo;
+            // console.log(updateTo);
+            if (+updateTo > 0) handler(+updateTo);
+        });
+    }
     //private method, since we are using babel here, we can use syntax like this
     _generateMarkup() {
         return `<figure class="recipe__fig">
@@ -2653,12 +2680,12 @@ class RecipeView extends (0, _viewDefault.default) {
             <span class="recipe__info-text">servings</span>
 
             <div class="recipe__info-buttons">
-              <button class="btn--tiny btn--increase-servings">
+              <button class="btn--tiny btn--update-servings" data-updat-to="${this._data.servings - 1}">
                 <svg>
                   <use href="${0, _iconsSvgDefault.default}#icon-minus-circle"></use>
                 </svg>
               </button>
-              <button class="btn--tiny btn--increase-servings">
+              <button class="btn--tiny btn--update-servings" data-update-to="${this._data.servings + 1}">
                 <svg>
                   <use href="${0, _iconsSvgDefault.default}#icon-plus-circle"></use>
                 </svg>

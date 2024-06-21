@@ -40,6 +40,8 @@ const controlRecipes = async function () {
     // alert(err);
     recipeView.renderError();
   }
+
+  // controlServings();
 }
 
 
@@ -89,9 +91,22 @@ const controlPagination = function (goToPage) {
 // controlSearchResults();
 
 
+const controlServings = function (newServings) {
+  // Update the recipe servings (in state)
+  model.updateServings(newServings);
+
+  // Update the recipe view
+
+  // 2) Rendering recipe
+  recipeView.render(model.state.recipe);
+
+}
+
+
 const init = function () {
   // we just implemented Publisher-Subscriber Pattern.
   recipeView.addHandlerRender(controlRecipes);
+  recipeView.addHandlerUpdateServings(controlServings);
   searchView.addHandlerSearch(controlSearchResults);
   paginationView.addHandlerClick(controlPagination);
 }
