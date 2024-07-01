@@ -3,6 +3,7 @@ import recipeView from './views/recipeView.js';
 import searchView from './views/searchView.js';
 import resultsView from './views/resultsView.js';
 import paginationView from './views/paginationView.js';
+import bookmarksView from './views/bookmarksView.js';
 
 import 'core-js/stable'; // for polyfilling everything else
 import 'regenerator-runtime/runtime'; //for polyfilling async/await
@@ -25,6 +26,10 @@ const controlRecipes = async function () {
 
     if (!id) return;
     recipeView.renderSpinner();
+
+    // 0) Update results view to mark selected search result
+    resultsView.update(model.getSearchResultsPage());
+    bookmarksView.update(model.state.bookmarks);
 
     // 1. Loading Recipe
     await model.loadRecipe(id); //async function return a promise
@@ -58,7 +63,7 @@ const controlRecipes = async function () {
 const controlSearchResults = async function () {
   try {
     resultsView.renderSpinner();
-    console.log(resultsView); 
+    console.log(resultsView);
     // 1) Get Search query
     const query = searchView.getQuery();
     if (!query) return;
@@ -83,7 +88,7 @@ const controlPagination = function (goToPage) {
 
   // 1) Render New Results
   resultsView.render(model.getSearchResultsPage(goToPage));
-  
+
   // 2) Render New Pagination Buttons
   paginationView.render(model.state.search);
 }
@@ -98,8 +103,28 @@ const controlServings = function (newServings) {
   // Update the recipe view
 
   // 2) Rendering recipe
-  recipeView.render(model.state.recipe);
+  // recipeView.render(model.state.recipe);
 
+  // Developing a DOM Updating Algorithm.
+  // It might not be the best algorithm to really use in the real world. Not performance wise effective for large applications.
+  recipeView.update(model.state.recipe); // only update the necessary pages without rendering the entire view.
+}
+
+const controlAddBookmark = function () {
+  // 1) Add/Remove bookmark
+  if (!model.state.recipe.bookmarked) {
+    model.addBookmark(model.state.recipe);
+  } else {
+    model.deleteBookmark(model.state.recipe.id);
+  }
+
+  // console.log(model.state.recipe);
+
+  // 2) Update recipe view
+  recipeView.update(model.state.recipe);
+
+  // 3) Render bookmarks
+  bookmarksView.render(model.state.bookmarks);
 }
 
 
@@ -107,6 +132,7 @@ const init = function () {
   // we just implemented Publisher-Subscriber Pattern.
   recipeView.addHandlerRender(controlRecipes);
   recipeView.addHandlerUpdateServings(controlServings);
+  recipeView.addHandlerAddBookmark(controlAddBookmark);
   searchView.addHandlerSearch(controlSearchResults);
   paginationView.addHandlerClick(controlPagination);
 }

@@ -5,31 +5,40 @@ import { Fraction } from 'fractional';
 
 
 class RecipeView extends View {
-    _parentElement = document.querySelector('.recipe');
-    _errorMessage = `We could not find that recipe. Please try another one!`;
-    _message = '';
+  _parentElement = document.querySelector('.recipe');
+  _errorMessage = `We could not find that recipe. Please try another one!`;
+  _message = '';
 
-    //Event Handlers in MVC: Publisher-Subscriber Pattern
-    addHandlerRender(handler) {
-        window.addEventListener('hashchange', handler);
-        window.addEventListener('load', handler);
-    }
+  //Event Handlers in MVC: Publisher-Subscriber Pattern
+  addHandlerRender(handler) {
+    window.addEventListener('hashchange', handler);
+    window.addEventListener('load', handler);
+  }
 
-    addHandlerUpdateServings(handler) {
-        this._parentElement.addEventListener('click', function (e) {
-            const btn = e.target.closest('.btn--update-servings');
-            if (!btn) return;
-            console.log(btn);
+  addHandlerUpdateServings(handler) {
+    this._parentElement.addEventListener('click', function (e) {
+      const btn = e.target.closest('.btn--update-servings');
+      if (!btn) return;
+      console.log(btn);
 
-            const updateTo = btn.dataset.updateTo;
-            // console.log(updateTo);
-            if (+updateTo > 0) handler(+updateTo);
-        });
-    }
+      const updateTo = btn.dataset.updateTo;
+      // console.log(updateTo);
+      if (+updateTo > 0) handler(+updateTo);
+    });
+  }
 
-    //private method, since we are using babel here, we can use syntax like this
-    _generateMarkup() {
-        return `<figure class="recipe__fig">
+  addHandlerAddBookmark(handler) {
+    this._parentElement.addEventListener('click', function (e) {
+      const btn = e.target.closest('.btn--bookmark');
+      if (!btn) return;
+
+      handler();
+    })
+  }
+
+  //private method, since we are using babel here, we can use syntax like this
+  _generateMarkup() {
+    return `<figure class="recipe__fig">
           <img src="${this._data.image}" alt="${this._data.title}" class="recipe__img" />
           <h1 class="recipe__title">
             <span>${this._data.title}</span>
@@ -68,9 +77,9 @@ class RecipeView extends View {
           <div class="recipe__user-generated">
             
           </div>
-          <button class="btn--round">
+          <button class="btn--round btn--bookmark">
             <svg class="">
-              <use href="${icons}#icon-bookmark-fill"></use>
+              <use href="${icons}#icon-bookmark${this._data.bookmarked ? '-fill' : ''}"></use>
             </svg>
           </button>
         </div>
@@ -79,7 +88,7 @@ class RecipeView extends View {
           <h2 class="heading--2">Recipe ingredients</h2>
           <ul class="recipe__ingredient-list">
             ${this._data.ingredients.map(ing => this._generateMarkupIngredients(ing))
-                .join('')}
+        .join('')}
           </ul>
         </div>
 
@@ -101,10 +110,10 @@ class RecipeView extends View {
             </svg>
           </a>
         </div>`;
-    }
+  }
 
-    _generateMarkupIngredients(ing) {
-        return `
+  _generateMarkupIngredients(ing) {
+    return `
                 <li class="recipe__ingredient">
                   <svg class="recipe__icon">
                     <use href="${icons}#icon-check"></use>
@@ -117,7 +126,7 @@ class RecipeView extends View {
                </li>
             `;
 
-    }
+  }
 }
 
 export default new RecipeView();
