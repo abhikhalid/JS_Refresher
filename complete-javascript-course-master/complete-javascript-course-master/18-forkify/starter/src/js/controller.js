@@ -33,9 +33,6 @@ const controlRecipes = async function () {
 
     // 1. Loading Recipe
     await model.loadRecipe(id); //async function return a promise
-
-    const { recipe } = model.state;
-
     // 2) Rendering recipe
     recipeView.render(model.state.recipe);
     // const recipeView = new RecipeView(model.state.recipe);
@@ -44,6 +41,7 @@ const controlRecipes = async function () {
   catch (err) {
     // alert(err);
     recipeView.renderError();
+    console.error(err);
   }
 
   // controlServings();
@@ -128,8 +126,16 @@ const controlAddBookmark = function () {
 }
 
 
+const controlBookmarks = function () {
+  bookmarksView.render(model.state.bookmarks);
+}
+
+
 const init = function () {
   // we just implemented Publisher-Subscriber Pattern.
+
+  bookmarksView.addHandlerRender(controlBookmarks);
+
   recipeView.addHandlerRender(controlRecipes);
   recipeView.addHandlerUpdateServings(controlServings);
   recipeView.addHandlerAddBookmark(controlAddBookmark);
@@ -138,3 +144,8 @@ const init = function () {
 }
 
 init();
+
+// only for development purposes
+const clearBookmarks = function () {
+  localStorage.clear('bookmarks');
+}
