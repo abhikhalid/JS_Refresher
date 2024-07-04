@@ -131,9 +131,27 @@ const controlBookmarks = function () {
   bookmarksView.render(model.state.bookmarks);
 }
 
-const createAddRecipe = function (newRecipe) {
+
+// only for development purposes
+const clearBookmarks = function () {
+  localStorage.clear('bookmarks');
+}
+
+const createAddRecipe = async function (newRecipe) {
   console.log(newRecipe);
-  // Upload the new recipe data
+
+  // const ingredients = Object.entries(newRecipe).filter(entry => entry[0].startsWith('ingredient') &&
+  //   entry[1] !== '');
+
+  // console.log(ingredients);
+
+  try {
+    await model.uploadRecipe(newRecipe);
+  }
+  catch (err) {
+    console.log(`💥`, err);
+    addRecipeView.renderError(err.message);
+  }
 }
 
 
@@ -149,12 +167,3 @@ const init = function () {
 }
 
 init();
-
-// only for development purposes
-const clearBookmarks = function () {
-  localStorage.clear('bookmarks');
-}
-
-export const uploadRecipe = async function (newRecipe) {
-  
-}
