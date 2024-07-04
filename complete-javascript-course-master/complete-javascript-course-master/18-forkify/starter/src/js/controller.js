@@ -4,6 +4,7 @@ import searchView from './views/searchView.js';
 import resultsView from './views/resultsView.js';
 import paginationView from './views/paginationView.js';
 import bookmarksView from './views/bookmarksView.js';
+import addRecipeView from './views/addRecipeView.js';
 
 import 'core-js/stable'; // for polyfilling everything else
 import 'regenerator-runtime/runtime'; //for polyfilling async/await
@@ -130,17 +131,21 @@ const controlBookmarks = function () {
   bookmarksView.render(model.state.bookmarks);
 }
 
+const createAddRecipe = function (newRecipe) {
+  console.log(newRecipe);
+  // Upload the new recipe data
+}
+
 
 const init = function () {
   // we just implemented Publisher-Subscriber Pattern.
-
   bookmarksView.addHandlerRender(controlBookmarks);
-
   recipeView.addHandlerRender(controlRecipes);
   recipeView.addHandlerUpdateServings(controlServings);
   recipeView.addHandlerAddBookmark(controlAddBookmark);
   searchView.addHandlerSearch(controlSearchResults);
   paginationView.addHandlerClick(controlPagination);
+  addRecipeView.addHandlerUpload(createAddRecipe);
 }
 
 init();
@@ -148,4 +153,8 @@ init();
 // only for development purposes
 const clearBookmarks = function () {
   localStorage.clear('bookmarks');
+}
+
+export const uploadRecipe = async function (newRecipe) {
+  
 }
