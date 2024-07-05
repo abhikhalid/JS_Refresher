@@ -30,6 +30,7 @@ export const sendJSON = async function (url, uploadData) {
             },
             body: JSON.stringify(uploadData),
         }), timeout(TIMEOUT_SEC)]);
+        
         const data = await res.json();
 
         if (!res.ok) throw new Error(`${data.message} (${res.status})`);
