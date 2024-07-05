@@ -1,0 +1,21 @@
+Go to JsDoc.app
+
+Lodash library
+
+-------------------------------------------------
+npm i parcel --save-dev
+
+so a dev dependency is just a tool
+to build our application. But it's not 
+a dependency that we actually include in our
+code.
+
+npx parcel  index.html
+
+// or
+// sudo npm i parcel
+
+//or
+npm uninstall parcel
+// npm i parcel@version
+
