@@ -4,7 +4,7 @@
   "description": "Recipe Application",
   "scripts": {
     "start": "parcel index.html",
-    "build": "parcel build index.html" // build the final project file with compression and tree shaking and all of that before we then deploy it to a server.
+    "build": "parcel build index.html --dist-dir ./dist" 
   },
   "author": "Khalid Mahmud",
   "license": "ISC",

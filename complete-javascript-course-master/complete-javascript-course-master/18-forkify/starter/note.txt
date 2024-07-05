@@ -19,3 +19,50 @@ npx parcel  index.html
 npm uninstall parcel
 // npm i parcel@version
 
+
+
+
+// Deployment
+// Simple Deployment wiht Netlify
+
+1. Delete .parcel-cache and 'dist folder' in order to get a fresh start.
+2. in package.json we have set this before.
+
+  "scripts": {
+    "start": "parcel index.html",
+    "build": "parcel build index.html" // build the final project file with compression and tree shaking and all of that before we then deploy it to a server.
+  },
+
+but this build command is actually not yet complete, because in the build command we actually need to manually specify that we want our output to be here in the dist folder. go to package.json and write this command
+
+ "scripts": {
+    "start": "parcel index.html",
+    "build": "parcel build index.html --dist-dir ./dist" 
+  },
+
+
+// dist => distribution
+// dir => directory 
+// folder name
+
+
+3. run this command
+
+npm run build
+
+this will create dist folder for us.
+
+
+4. Now go to 'netlify.com'. It is a free service that lets us developers deploy static webpages or static web applications.
+
+Static Web Application means => HTML+CSS+JS+IMAGES
+but no database or server side code at all. It contain lots of features that we can use for free. One of these features is called continuous integration with GIT. 
+
+If you want something even more simple without even having to open an account, we can use 'surge' service. which is also free and it's even easier. (surge.sh)
+
+Surge Command: 
+    i. npm install --global surge
+    ii. surge
+
+
+
