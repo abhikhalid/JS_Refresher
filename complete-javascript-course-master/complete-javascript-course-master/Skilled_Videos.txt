@@ -1,0 +1,52 @@
+(Section 1) : Welcome, Welcome, Welcome!
+1. Setting Up Our Code Editor 
+
+(Section 2) : JavaScript Fundamentals - Part 2
+
+15. A Note About Challenges
+Coding Exercises 1: CHALLENGE #1
+16. CHALLENGE #1: Video Solution
+Coding Exercises 2: CHALLENGE #2
+19. CHALLENGE #2 : Video Solution
+Coding Exercises 3: CHALLENGE #3
+25. CHALLENGE #3 : Video Solution
+Coding Exercise 4 : CHALLENGE #4
+29. CHALLENGE #4 : Video Solution
+
+(Section 3) : JavaScript Fundamentals - Part 2   
+Coding Exercises 5: CHALLENGE #1
+38. CHALLENGE #1: Video Solution
+Coding Exercises 6: CHALLENGE #2   
+CHALLENGE #2: Video Solution
+Coding Exercise 7: CHALLENGE #3
+45. CHALLENGE #3: Video Solution
+Coding Exercise 8: CHALLENGE #4
+CHALLENGE #4: Video Solution
+
+(Section 6) : [Optional] HTML & CSS Crash Course
+67. Introduction to the CSS Box Model
+
+
+(Section 9) : Data Structures, Modern Operators and Strings
+111. Coding Challenge #1
+116. Coding Challenge #2
+121. Coding Challenge #3
+125. Coding Challenge #4
+
+
+(Section 11) : Working with Arrays
+168. Coding Challenge #4
+
+
+(Section 13) : Advanced DOM and Events
+204. Efficient Script Loading: defer and async
+
+
+(Section 17) : Modern JavaScript Development: Modules, Tooling, and Functional
+
+279. Bundling With Parcel and NPM Scripts
+280. Configuring Babel and Polyfilling
+284. Let's fix Some Bad Code: Part 2
+268. Coding Challenge #3
+
+(SECTION 19) : Setting Up Git and Deployment (314 theke)
